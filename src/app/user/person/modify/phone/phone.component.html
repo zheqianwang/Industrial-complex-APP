@@ -1,0 +1,125 @@
+<div id="content">
+
+  <p id="btn" (click)="close()">
+    <ion-icon name="arrow-back"></ion-icon>
+    个人中心
+  </p>
+
+
+  <div class="content-step">
+    <Steps [size]="'small'" [current]="current" [direction]="'horizontal'">
+      <Step [title]="'验证手机号码'" [status]="'finish'" [icon]="customIcon"></Step>
+      <Step [title]="'修改绑定号码'" [status]="current>=1?'finish':''" [icon]="customIcon1"></Step>
+      <Step [title]="'完成'" [icon]="customIcon2"></Step>
+    </Steps>
+  </div>
+
+  <ng-template #customIcon>
+    <div class="content-customIcon"
+      [ngStyle]="{'background-color':current>=0?'#0987fe':'#fff','color': current>=0?'#fff':'#ccc'}">
+      1
+    </div>
+  </ng-template>
+  <ng-template #customIcon1>
+    <div class="content-customIcon"
+      [ngStyle]="{'background-color':current>=1?'#0987fe':'#fff','color': current>=1?'#fff':'#ccc'}">
+      2
+    </div>
+  </ng-template>
+  <ng-template #customIcon2>
+    <div class="content-customIcon"
+      [ngStyle]="{'background-color':current>=2?'#0987fe':'#fff','color': current>=2?'#fff':'#ccc'}">
+      3
+    </div>
+  </ng-template>
+
+  <div class="content-step-content" *ngIf="current === 0">
+    <div class="am-list-body">
+      <InputItem name="old_Phone" [type]="'phone'" [placeholder]="'请输入当前手机号码'" [(ngModel)]="old_Phone" [clear]="'true'">
+        当前手机号码</InputItem>
+    </div>
+    <WhiteSpace size='md'></WhiteSpace>
+    <div class="content-step-content-btn" Button [type]="'primary'" [size]="'small'" (click)="next('1to2')"
+      [loading]="btnloading">下一步</div>
+  </div>
+  <div class="content-step-content" *ngIf="current === 1">
+    <div class="am-list-body">
+      <InputItem name="newPhone" [type]="'phone'" [placeholder]="'请输入新手机号码'" [(ngModel)]="newPhone" [clear]="'true'">
+        新手机号码
+      </InputItem>
+    </div>
+    <WhiteSpace size='md'></WhiteSpace>
+    <div class="content-step-content-btn" Button [type]="'primary'" [size]="'small'" (click)="next('2to3')">下一步</div>
+  </div>
+  <div class="content-step-content" *ngIf="current === 2">
+    <div class="am-list-body">
+      <Result [img]="img2" [title]="'修改成功'">
+        <ng-template #img2>
+          <Icon class="spe" [type]="'check-circle'" [color]="'#1F90E6'"></Icon>
+        </ng-template>
+      </Result>
+      <div Button [type]="'primary'" [size]="'small'" (click)="close()">完成</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- <nz-divider nzType="horizontal"></nz-divider>
+  
+  
+  <nz-steps [nzCurrent]="current">
+    <nz-step nzTitle="验证手机号码"></nz-step>
+    <nz-step nzTitle="修改绑定号码"></nz-step>
+    <nz-step nzTitle="完成"></nz-step>
+  </nz-steps>
+  
+  <div class="step-content" *ngIf="current===0" [ngTemplateOutlet]="first">
+  </div>
+  <div class="step-content" *ngIf="current===1" [ngTemplateOutlet]="second">
+  </div>
+  <div class="step-content" *ngIf="current===2" [ngTemplateOutlet]="done">
+  </div>
+  
+  
+  <ng-template #first>
+    <form nz-form style="padding: 0 30%;">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7">绑定手机号码</nz-form-label>
+        <nz-form-control [nzSpan]="12">
+          <input nz-input [(ngModel)]="oldPhone" name="password" type="password" placeholder="请输入当前密码"/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control [nzOffset]="7" [nzSpan]="12">
+          <button nz-button (click)="authPhone()" nzType="primary">下一步</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-template>
+  
+  
+  <ng-template #second>
+    <form nz-form style="padding: 0 30%">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7">手机号码</nz-form-label>
+        <nz-form-control [nzSpan]="12" >
+          <input nz-input name="newpwd" type="password" [(ngModel)]="newPhone" placeholder="请输入6~16位长度密码"/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control [nzOffset]="7" [nzSpan]="12">
+          <button nz-button (click)="current=current-1;">上一步</button>
+          <button nz-button (click)="ensure()" nzType="primary" style="margin-left: 8px;">下一步</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-template>
+  
+  <ng-template #done>
+    <div style="text-align: center;line-height: 100px;">
+      <nz-progress [nzPercent]="100" nzType="circle"></nz-progress>
+      <br>
+      <button nz-button (click)="logout()" >重新登录</button>
+      <button nz-button (click)="close()" nzType="primary" style="margin-left: 8px;">修改完成</button>
+    </div>
+  </ng-template> -->

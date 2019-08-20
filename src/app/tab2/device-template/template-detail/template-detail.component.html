@@ -1,0 +1,171 @@
+<div id="content">
+  <p id="btn" (click)="close()">
+    <!-- <i nz-icon nzType="left" nzTheme="outline"></i> -->
+    <ion-icon name="arrow-back"></ion-icon>
+    设备模板
+  </p>
+
+  <p style="    padding-left: 24px;
+    font-size: 16px;
+    border-left: solid #0987fe;">基本信息</p>
+
+  <!-- <form nz-form>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>模板编号</nz-form-label>
+      <nz-form-control [nzSpan]="12" [nzHasFeedback]="!codeRequired" [nzValidateStatus]="codeRequired?'success':'error'">
+        <input nz-input name="code" [(ngModel)]="template['code']" [disabled]="option=='edit'"/>
+        <nz-form-explain *ngIf="!codeRequired">请输入编号！</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>模板名称</nz-form-label>
+      <nz-form-control [nzSpan]="12" [nzHasFeedback]="!nameRequired" [nzValidateStatus]="nameRequired?'success':'error'">
+        <input nz-input name="name" [(ngModel)]="template['name']" [disabled]="option=='edit'"/>
+        <nz-form-explain *ngIf="!nameRequired">请输入名称！</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7">描述</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <input nz-input name="description" [(ngModel)]="template['description']" />
+      </nz-form-control>
+    </nz-form-item>
+  </form> -->
+  <div class="am-list-body">
+    <InputItem name="code" [(ngModel)]="template['code']" [disabled]="option=='edit'" [clear]="true"
+      [placeholder]="'请输入编号'" [moneyKeyboardAlign]="'left'" [error]="!codeRequired"
+      (onErrorClick)="inputErrorClick('模板编号',$event)" (onChange)="inputChange('模板编号', $event)"><span
+        style="color: red">*</span>模板编号
+    </InputItem>
+  </div>
+  <div class="am-list-body">
+    <InputItem name="name" [(ngModel)]="template['name']" [disabled]="option=='edit'" [clear]="true"
+      [placeholder]="'请输入名称'" [moneyKeyboardAlign]="'left'" [error]="!nameRequired"
+      (onErrorClick)="inputErrorClick('模板名称',$event)" (onChange)="inputChange('模板名称', $event)"><span
+        style="color: red">*</span>模板名称
+    </InputItem>
+  </div>
+  <div class="am-list-body">
+    <InputItem name="description" [(ngModel)]="template['description']" [clear]="true"
+      [placeholder]="'请输入描述'" [moneyKeyboardAlign]="'left'" >描述
+    </InputItem>
+  </div>
+  
+  <WhiteSpace [size]="'lg'"></WhiteSpace>
+  <p style="    padding-left: 24px;
+    font-size: 16px;
+    border-left: solid #0987fe;">属性信息</p>
+
+  <!-- <nz-table *ngIf="template['attrs']!=null" #attrsTable nzSize="small" [nzData]="template['attrs']"
+            [nzFrontPagination]="false" [nzShowPagination]="false"
+            style="margin: 24px;padding-left: 150px;padding-right: 150px">
+    <thead>
+    <tr>
+      <th nzWidth="64px">
+        #
+      </th>
+      <th>名称</th>
+      <th>编号</th>
+      <th>值类型</th>
+      <th>描述</th>
+      <th>单位</th>
+      <th nzWidth="80px">累加值</th>
+      <th nzWidth="80px">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of attrsTable.data">
+      <td *ngIf="data.key!='null'">
+        {{template['attrs'].indexOf(data) + 1}}
+      </td>
+      <td *ngIf="data.key=='null'">
+        <button class="custom-btn" nz-button (click)="addAttr()" nz-tooltip nzTitle="添加一条属性" nzPlacement="right">
+          <i nz-icon nzType="plus" nzTheme="outline"></i>
+        </button>
+      </td>
+      <td *ngIf="data.key!='null'">
+        <input type="text" nz-input [(ngModel)]="data['name']" placeholder="请填写名称"/>
+      </td>
+      <td *ngIf="data.key!='null'">
+        <input type="text" nz-input [(ngModel)]="data['code']" placeholder="请填写唯一编号"/>
+      </td>
+      <td *ngIf="data.key!='null'">
+        <nz-select [(ngModel)]="data['valuetype']" nzPlaceHolder="请选择数值类型" style="width:100%;">
+          <nz-option [nzValue]="'string'" [nzLabel]="'字符串'"></nz-option>
+          <nz-option [nzValue]="'number'" [nzLabel]="'数字'"></nz-option>
+          <nz-option [nzValue]="'bool'" [nzLabel]="'布尔'"></nz-option>
+          <nz-option [nzValue]="'option'"  [nzLabel]="'枚举'"></nz-option>
+        </nz-select>
+      </td>
+      <td *ngIf="data.key!='null'">
+        <input type="text" nz-input [(ngModel)]="data['description']" placeholder="请填写描述"/>
+      </td>
+      <td *ngIf="data.key!='null'">
+        <input type="text" nz-input [(ngModel)]="data['unit']" placeholder="请填写单位"/>
+      </td>
+      <td *ngIf="data.key!='null'">
+        <nz-switch class="switch" [(ngModel)]="data['sum']"></nz-switch>
+      </td>
+      <td *ngIf="data.key!='null'">
+        <a style="color: #ff2222" (click)="remove(data['key'])">
+          <i nz-icon nzType="delete" nzTheme="outline"></i>删除
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table> -->
+
+  <table style="width: 100%; border-collapse:separate; border-spacing:0px 20px; ">
+      <thead>
+        <tr>
+          <th style="width: 15%;">名称</th>
+          <th style="width: 15%;">编号</th>
+          <th style="width: 20%;">值类型</th>
+          <th style="width: 20%;">单位</th>
+          <th style="width: 15%;">累加值</th>
+          <th style="width: 15%;">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of template['attrs']">
+          <td *ngIf="data.key=='null'">
+            <div Button [type]="'primary'" [size]="'small'" (click)="addAttr()"><i class="icon ion-android-add"></i></div>
+          </td>
+          <td *ngIf="data.key!='null'" style="width: 15%;">
+            <InputItem [(ngModel)]="data['name']" [placeholder]="'名称'"></InputItem>
+          </td>
+          <td *ngIf="data.key!='null'" style="width: 15%;">
+            <InputItem [(ngModel)]="data['code']" [placeholder]="'编号'"></InputItem>
+          </td>
+          <td *ngIf="data.key!='null'" style="width: 20%;">
+            <ion-select placeholder="值类型"  [(ngModel)]="data['valuetype']" ok-text="确认" cancel-text="取消">
+              <ion-select-option value="string">字符串</ion-select-option>
+              <ion-select-option value="number">数字</ion-select-option>
+              <ion-select-option value="bool">布尔</ion-select-option>
+              <ion-select-option value="option">枚举</ion-select-option>
+            </ion-select>
+          </td>
+          <td *ngIf="data.key!='null'" style="width: 20%;">
+            <InputItem [(ngModel)]="data['unit']" [placeholder]="'单位'"></InputItem>
+          </td>
+          <td *ngIf="data.key!='null'" style="width: 15%;">
+            <Switch [(ngModel)]="data['sum']"></Switch>
+          </td>
+          <td *ngIf="data.key!='null'" style="width: 15%; text-align: center;" (click)="remove(data['key'])">
+            <a style="color: #ff2222" >
+              <!-- <i nz-icon nzType="delete" nzTheme="outline"></i> -->
+              <i class="icon ion-android-delete"></i>
+              <!-- 删除 -->
+            </a>
+          </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
+  <div style="display: flex; padding: 0% 20%;">
+    <div Button [size]="'small'" [type]="'primary'"  (click)="submit()">保存</div>
+    <div Button [size]="'small'" (click)="close()" [type]="'ghost'"  [inline]="true" style="margin-left: 10%;">取消</div>
+  </div>
+</div>

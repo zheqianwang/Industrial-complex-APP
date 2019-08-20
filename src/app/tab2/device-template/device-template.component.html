@@ -1,0 +1,145 @@
+<!-- <div id="content" *ngIf="!tempDetail">
+
+  <div >
+    <nz-layout style="padding:24px 0; background: transparent">
+      <nz-content style="padding: 0 24px; min-height: 280px;">
+        <div id="list-tool">
+          <label>
+            <input type="text" nz-input placeholder="输入关键字搜索" [(ngModel)]="searchValue" (ngModelChange)="search()">
+          </label>
+          <div id="btns">
+            <button nz-button (click)="getList()">刷新</button>
+            <button nz-button nzType="primary" (click)="add()">新增</button>
+          </div>
+        </div>
+        <nz-table #list [nzData]="tempList" [nzLoading]="loading"  [nzPageSize]="pageSize" [nzPageIndex]="currentIndex"
+                  [nzPageSizeOptions]="sizeOption" nzShowSizeChanger>
+          <thead>
+          <tr>
+            <th nzWidth="100px">#</th>
+            <th>模板编号</th>
+            <th>模板名称</th>
+            <th>创建时间</th>
+            <th>描述</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let data of list.data">
+            <td>{{tempList.indexOf(data) + 1}}</td>
+            <td>
+              <a (click)="edit(data.key)">{{ data.code }}</a>
+            </td>
+            <td>{{ data.name }}</td>
+            <td>{{ data.time }}</td>
+            <td>{{data.description}}</td>
+            <td>
+              <a (click)="edit(data.key)">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+                编辑
+              </a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a nz-popconfirm nzTitle="确定删除？"  (nzOnConfirm)="remove(data.key)" style="color: #ff2222;">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+                删除</a>
+            </td>
+          </tr>
+          </tbody>
+        </nz-table>
+      </nz-content>
+    </nz-layout>
+  </div>
+
+</div> -->
+
+<app-template-detail *ngIf="tempDetail" [template]="template" [option]="option" (result)="cancel($event)">
+</app-template-detail>
+
+<div id="content" *ngIf="!tempDetail">
+  <div style="width: 100%; min-height: 35px; margin: 10px;">
+    <div style=" width: 60%; float: left;">
+      <!-- <SearchBar [placeholder]="'输入关键字搜索'" [setFocus]="autoFocus" [(ngModel)]="searchValue" (ngModelChange)="search()">
+      </SearchBar> -->
+      <div class="item-input-inset" style="padding: 0">
+        <label class="item-input-wrapper">
+          <i class="icon ion-ios-search placeholder-icon"></i>
+          <ion-input type="search" placeholder="输入关键字搜索" [(ngModel)]="searchValue" (ionChange)="search()"
+            (ionFocus)=" this.inputFocus = true; " (ionBlur)=" this.inputFocus = false; "></ion-input>
+        </label>
+        <ion-button *ngIf="inputFocus" class="button cancel-btn" size="small" fill="clear" (click)="cancel()">
+          取消
+        </ion-button>
+      </div>
+    </div>
+    <div Button [size]="'small'" (click)="getList()" style="width: 15%; margin-left: 1%; float: left;">刷新
+    </div>
+    <div Button [size]="'small'" [type]="'primary'" (click)="add()" style="width: 15%; margin-left: 1%; float: left;">新增
+    </div>
+  </div>
+  <ActivityIndicator [toast]="true" [text]="'加载中...'" [animating]="loading"></ActivityIndicator>
+  <!-- <table style="width: 100%; border-collapse:separate; border-spacing:0px 15px; ">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>模板编号</th>
+        <th>模板名称</th>
+        <th>描述</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of tempList">
+        <td>{{tempList.indexOf(data) + 1}}</td>
+        <td><a (click)="edit(data.key)">{{ data.code }}</a></td>
+        <td>{{ data.name }}</td>
+        <td>{{data.description}}</td>
+        <td style=" font-size: 20px;">
+          <a (click)="edit(data.key)">
+            <ion-icon name="create"></ion-icon>
+          </a>
+          <a (click)="remove(data.key)" style="color: #ff2222;">
+            <ion-icon name="trash"></ion-icon>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table> -->
+
+  <WingBlank>
+    <Card *ngFor="let data of tempList" style="margin: 5px 0px 15px;">
+      <CardHeader [title]="data.name" class="title" [extra]="extra" style="background-color: skyblue;">
+      </CardHeader>
+      <ng-template #extra>
+        <a (click)="remove(data.key)" style="color: #fff;">
+          <ion-icon name="trash"></ion-icon>
+          <!-- 删除 -->
+        </a>
+      </ng-template>
+      <CardBody (click)="edit(data.key)" style="padding: 0px 0px 5px; border: 1px solid skyblue;" >
+        <div>
+          <table
+            style="width: 100%; border-collapse:separate; border-spacing:0px 15px; table-layout: fixed; border: 0px; padding: 0px 10px">
+            <tbody>
+              <tr>
+                <td>模板编号</td>
+                <td>{{ data.code }}</td>
+              </tr>
+              <tr>
+                <td>模板名称</td>
+                <td>{{ data.name }}</td>
+              </tr>
+              <tr>
+                <td>创建时间</td>
+                <td>{{ data.time }}</td>
+              </tr>
+              <tr>
+                <td>描述</td>
+                <td>{{ data.description }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </CardBody>
+    </Card>
+  </WingBlank>
+</div>

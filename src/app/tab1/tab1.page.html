@@ -1,0 +1,26 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            应用
+        </ion-title>
+        <ion-icon name="more" class="bar-btn" slot="end" (click)="presentPopover($event)"></ion-icon>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="gray">
+        <ion-grid class="grid" *ngFor="let group of grid" >
+            <ion-label style="margin-left: 16px;">
+                {{group.group}}
+            </ion-label>
+            <ion-row *ngFor="let row of group.children">
+                <ion-col style="text-align: center;" *ngFor="let col of row" size="3">
+                    <div [routerLink]="[col.url]">
+                        <ion-img class="grid-img" [src]="'../../assets/img/home/'+col.img+'.png'"></ion-img>
+                    </div>
+                    <ion-label>
+                        {{col.title}}
+                    </ion-label>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+</ion-content>

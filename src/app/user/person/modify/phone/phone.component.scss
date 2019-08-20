@@ -1,0 +1,47 @@
+#btn {
+    margin: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: #0987fe;
+  }
+  
+  #btn:hover{
+    color: #0987fe;
+  }
+  #content {
+    // position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    // margin: 12px;
+    background-color: #ffffff;
+    // border-radius: 8px;
+    // min-height: 760px;
+    width: 100%;
+    height: 100%;
+  }
+
+  #content .content-step {
+      margin: 16px;
+  }
+  #content .content-customIcon {
+    width: 20px;
+    height:20px;
+    border-radius: 10px;
+  }
+  #content .content-step-content {
+      margin: 30px 16px;
+  }
+
+  #content .content-step-content .am-list-body {
+    position: relative;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+  }
+  #content .content-step-content-btn {
+    width: 50%;
+    margin: 0 auto;
+
+  }

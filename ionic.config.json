@@ -1,0 +1,19 @@
+<<<<<<< HEAD
+{
+  "name": "ionicapp",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}
+=======
+{
+  "name": "ionicapp",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}
+>>>>>>> 工业物联备份

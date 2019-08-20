@@ -1,0 +1,17 @@
+<<<<<<< HEAD
+{
+  "appId": "io.ionic.starter",
+  "appName": "ionicapp",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}
+=======
+{
+  "appId": "io.ionic.starter",
+  "appName": "ionicapp",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}
+>>>>>>> 工业物联备份

@@ -1,0 +1,13 @@
+[nz-form] {
+  padding-top: 8px;
+  max-width: 600px;
+}
+#btn {
+  margin: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+#btn:hover {
+  color: #0987fe;
+}
+/*# sourceMappingURL=add-alarm-strategy.component.css.map */

@@ -1,0 +1,59 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            我
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="gray">
+
+    <!--登录卡片-->
+    <ion-card *ngIf="userLogin" [routerLink]="['person']" style="--background: #ffffff">
+        <ion-card-content>
+            <div>
+                <span style="font-size: 24px;font-weight: bold;">{{userInformation.user.username}}</span><br>
+                <span *ngIf="userInformation.user.role == 'admin'" style="color: #1890ff">管理员</span>
+                <span *ngIf="userInformation.user.role == 'user'" >普通用户</span>
+                <ion-avatar style="float: right;margin-top: -30px;">
+                    <img alt="" src="../../assets/img/home/u74.png">
+                </ion-avatar>
+            </div>
+            <div style="text-align: right;font-size: 32px; padding-top: 24px;">
+                <ion-icon name="albums" [routerLink]="['card']" style="margin-right: 16px;"></ion-icon>
+                <ion-icon [routerLink]="['profile']" name="options"></ion-icon>
+            </div>
+        </ion-card-content>
+    </ion-card>
+
+    <!--未登录卡片-->
+    <ion-card *ngIf="!userLogin" style="--background: #ffffff">
+        <ion-card-content (click)="login()">
+            <ion-card-title style="text-align: center">未登录</ion-card-title>
+            <ion-card-subtitle style="text-align: center;margin-top: 20px">登录以使用全部功能</ion-card-subtitle>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-item [routerLink]="['setting']" detail lines="none">
+        <ion-icon name="settings" slot="start"></ion-icon>
+        <ion-label>设置</ion-label>
+    </ion-item>
+    <ion-item [routerLink]="['about']" detail lines="none">
+        <ion-icon name="cube" slot="start"></ion-icon>
+        <ion-label>关于</ion-label>
+    </ion-item>
+
+    <ion-item *ngIf="userLogin" (click)="presentAlertConfirm()" lines="none"
+              style="text-align: center;margin-top: 20px">
+        <ion-label color="primary">退出登录</ion-label>
+    </ion-item>
+    <ion-item *ngIf="!userLogin" (click)="login()" lines="none"
+              style="text-align: center;margin-top: 20px">
+        <ion-label color="primary">登录</ion-label>
+    </ion-item>
+</ion-content>
+
+<ion-button (click)="openCamera()">拍照</ion-button>
+<ion-button (click)="upload()">文件上传</ion-button>
+<ion-button (click)="download()">文件下载</ion-button>
+
