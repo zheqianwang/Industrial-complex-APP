@@ -1,0 +1,188 @@
+<!-- <div id="content">
+
+  <app-device-detail *ngIf="deviceDetail" [device]="device" [option]="option" [parentCom]="'设备列表'"
+                     (result)="cancel($event)"></app-device-detail>
+
+  <div *ngIf="!deviceDetail">
+    <nz-layout style="padding:24px 0; background: transparent">
+      <nz-content style="padding: 0 24px; min-height: 280px;">
+        <div id="list-tool">
+          <label>
+            <input type="text" nz-input placeholder="输入关键字搜索" [(ngModel)]="searchValue" (ngModelChange)="search()">
+          </label>
+            <button nz-button (click)="getList()">刷新</button>
+            <button nz-button nzType="primary" (click)="add()">新增</button>
+            <button nz-button nzType="primary" (click)="synchro()">同步</button>
+        </div>
+        <nz-table #list [nzData]="deviceList" [nzLoading]="loading" [nzPageSize]="pageSize" [nzPageIndex]="currentIndex"
+                  [nzPageSizeOptions]="sizeOption" nzShowSizeChanger>
+          <thead>
+          <tr>
+            <th nzWidth="100px">#</th>
+            <th>设备编号</th>
+            <th>设备名称</th>
+            <th>设备类型</th>
+            <th>注册时间</th>
+            <th>展示卡片</th>
+            <th>运行状态</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let data of list.data">
+            <td>{{deviceList.indexOf(data) + 1}}</td>
+            <td>
+              <a (click)="edit(data.key)">{{ data.code }}</a>
+            </td>
+            <td>
+              {{data.name}}
+            </td>
+            <td>{{ data.type }}</td>
+            <td>{{ data.time }}</td>
+            <td>
+              <nz-switch [(ngModel)]="data.display" (ngModelChange)="save(data)" class="switch"></nz-switch>
+            </td>
+            <td>
+              <nz-switch [(ngModel)]="data.status" class="switch"></nz-switch>
+            </td>
+            <td>
+              <a (click)="edit(data.key)">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+                编辑
+              </a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a nz-popconfirm nzTitle="确定删除？" (nzOnConfirm)="remove(data.key)" style="color: #ff2222;">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+                删除</a>
+            </td>
+          </tr>
+          </tbody>
+        </nz-table>
+      </nz-content>
+    </nz-layout>
+  </div>
+
+</div> -->
+
+
+
+<div id="content">
+
+  <app-device-detail *ngIf="deviceDetail" [device]="device" [option]="option" [parentCom]="'设备列表'"
+    (result)="cancel($event)"></app-device-detail>
+
+  <div *ngIf="!deviceDetail">
+    <div style="width: 100%; min-height: 50px; margin: 0 auto; padding: 5px 0px;">
+      <div style="width: 50%; float: left;">
+        <!-- <SearchBar [placeholder]="'输入关键字搜索'" [setFocus]="autoFocus" [(ngModel)]="searchValue"
+          (ngModelChange)="search()">
+        </SearchBar> -->
+        <div class="item-input-inset" style="padding: 0">
+          <label class="item-input-wrapper">
+            <i class="icon ion-ios-search placeholder-icon"></i>
+            <ion-input type="search" placeholder="输入关键字搜索" [(ngModel)]="searchValue" (ionChange)="search()"
+              (ionFocus)=" this.inputFocus = true; " (ionBlur)=" this.inputFocus = false; "></ion-input>
+          </label>
+          <ion-button *ngIf="inputFocus" class="button cancel-btn" size="small" fill="clear" (click)="cancel()">
+            取消
+          </ion-button>
+        </div>
+      </div>
+      <div Button [size]="'small'" (click)="getList()" style="width: 15%; margin-left: 1%; float: left;">刷新
+      </div>
+      <div Button [size]="'small'" [type]="'primary'" (click)="add()" style="width: 15%; margin-left: 1%; float: left;">
+        新增</div>
+      <div Button [size]="'small'" [type]="'primary'" (click)="synchro()"
+        style="width: 15%; margin-left: 1%; float: left;">同步</div>
+    </div>
+    <!-- <WhiteSpace [size]="'lg'"></WhiteSpace> -->
+    <ActivityIndicator [toast]="true" [text]="'加载中...'" [animating]="loading"></ActivityIndicator>
+    <!-- <table style="width: 100%; border-collapse:separate; border-spacing:0px 15px; table-layout: fixed;">
+      <thead>
+        <tr>
+          <th width="15px">#</th>
+          <th width="60px">设备编号</th>
+          <th width="60px">设备名称</th>
+          <th width="60px">设备类型</th>
+          <th width="60px">展示卡片</th>
+          <th width="60px">运行状态</th>
+          <th width="31px">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of deviceList">
+          <td>{{deviceList.indexOf(data) + 1}}</td>
+          <td>
+            <a (click)="edit(data.key)">{{ data.code }}</a>
+          </td>
+          <td>
+            {{data.name}}
+          </td>
+          <td>{{ data.type }}</td>
+          <td>
+            <Switch [(ngModel)]="data.display" (ngModelChange)="save(data)"></Switch>
+          </td>
+          <td>
+            <Switch [(ngModel)]="data.status"></Switch>
+          </td>
+          <td>
+            <a (click)="edit(data.key)">
+              <ion-icon name="create"></ion-icon>
+            </a>
+            <a (click)="remove(data.key)" style="color: #ff2222;">
+              <ion-icon name="trash"></ion-icon>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table> -->
+
+    <WingBlank style="margin: 0">
+      <Card *ngFor="let data of deviceList" style="margin: 5px 0px 15px;">
+        <CardHeader   [title]="title" class="title" [extra]="extra" style="background-color: skyblue;">
+        </CardHeader>
+        <ng-template #title> <span (click)="edit(data.key)">{{ data.name }}</span>
+        </ng-template>
+        <ng-template #extra>{{ data.code }}
+          <a (click)="remove(data.key)" style="color: #fff; margin-left: 10px;">
+            <ion-icon name="trash"></ion-icon>
+            <!-- 删除 -->
+          </a>
+        </ng-template>
+        <CardBody style="padding: 0px 0px 5px; border: 1px solid skyblue;">
+          <div>
+            <table
+              style="width: 100%; border-collapse:separate; border-spacing:0px 15px; table-layout: fixed; border: 0px; padding: 0px 10px">
+              <tbody>
+                <tr>
+                  <td>设备名称</td>
+                  <td>{{ data.name }}</td>
+                </tr>
+                <tr>
+                  <td>设备编号</td>
+                  <td>{{ data.code }}</td>
+                </tr>
+                <tr>
+                  <td>设备类型</td>
+                  <td>{{ data.type }}</td>
+                </tr>
+                <tr>
+                  <td>注册时间</td>
+                  <td>{{ data.time }}</td>
+                </tr>
+                <tr>
+                  <td>展示卡片</td>
+                  <td><Switch [(ngModel)]="data.display" (ngModelChange)="save(data)"></Switch></td>
+                </tr>
+                <tr>
+                  <td>运行状态</td>
+                  <td> <Switch [(ngModel)]="data.status"></Switch></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </CardBody>
+      </Card>
+    </WingBlank>
+  </div>
+</div>

@@ -1,0 +1,219 @@
+<!-- 这是移动端模板的页首 -->
+<ion-header *ngIf="!userLogin">
+  <ion-toolbar>
+    <ion-title>
+      设备
+    </ion-title>
+    <ion-icon name="more" class="bar-btn" slot="end" (click)="presentPopover($event)"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+<ion-content *ngIf="!userLogin">
+  <Result [img]="img5" [title]="'尚未登录'" [message]="'由于您的账户还未登录，该功能暂不能使用，请登录后查看'">
+    <ng-template #img5>
+      <img src="https://gw.alipayobjects.com/zos/rmsportal/GIyMDJnuqmcqPLpHCSkj.svg" class="spe am-icon am-icon-md"
+        alt="" />
+    </ng-template>
+  </Result>
+  <WhiteSpace></WhiteSpace>
+  <div Button [type]="'primary'" [size]="'small'" style="width: 25%; margin: 0 auto;" [routerLink]="['/login']">去登录
+  </div>
+</ion-content>
+
+<!-- 显示搜索框 -->
+<ion-header *ngIf="searchbar">
+  <ion-toolbar>
+    <!-- <SearchBar [(ngModel)]="searchValue" [placeholder]="'Search'" [showCancelButton]="true" [setFocus]="autoFocus"
+      (onCancel)="cancel()" (onChange)="search(searchValue)"></SearchBar> -->
+    <div class="item-input-inset" style="padding: 0">
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios-search placeholder-icon"></i>
+        <ion-input type="search" placeholder="Search" [(ngModel)]="searchValue" (ionChange)="search()"></ion-input>
+      </label>
+      <ion-button class="button cancel-btn" size="small" fill="clear" (click)="cancel()">
+        取消
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<!-- 默认不显示搜索框 -->
+<ion-header *ngIf="!searchbar  && userLogin">
+  <Navbar [icon]="icon" [mode]="'dark'" [rightContent]="rightContent">
+    <span *ngIf="showpage == 'sbjk'">设备监控</span>
+    <span *ngIf="showpage == 'sbmb'">设备模板</span>
+    <span *ngIf="showpage == 'sblb'">设备列表</span>
+  </Navbar>
+  <ng-template #rightContent>
+    <Icon *ngIf="!(option == 'inCard') && !deviceDetail && (showpage == 'sbjk')" [type]="'search'" (click)="searchBar()"
+      [ngStyle]="{marginRight: '16px'}">
+    </Icon>
+    <!-- <Icon [type]="'ellipsis'" [ngStyle]="{'transform': rotate}" (click)="onOpenChange()"></Icon> -->
+    <Icon *ngIf="!(option == 'inCard')" (click)="caidan($event)" Popover
+      [ngStyle]="{'height': '100%', 'display': 'flex', 'align-items': 'center'}" [mask]="true" [overlay]="overlay"
+      [type]="'ellipsis'" [placement]="'bottomRight'"></Icon>
+
+    <!-- <Menu *ngIf=" show && initData" style="top: 100%; width:40%; box-shadow: 0px 10px 20px 1px #000000cc"
+            class="single-foo-menu" [data]="initData" [value]="[showpage]" [level]="showpage"
+            (onChange)="onChange($event)">
+            </Menu> -->
+
+    <div *ngIf="show && !initData" style="width: 100% ; display: flex; justify-content: center; align-items: center">
+      <ActivityIndicator [size]="'large'"></ActivityIndicator>
+    </div>
+    <div *ngIf="show" class="menu-mask2" (click)="onMaskClick()"></div>
+  </ng-template>
+  <ng-template #overlay>
+    <PopoverItem [icon]="icon1" (click)="popoverSelect('sbjk')">设备监控</PopoverItem>
+    <PopoverItem [icon]="icon2" [ngStyle]="{'whiteSpace': 'nowrap'}" (click)="popoverSelect('sbmb')">设备模板
+    </PopoverItem>
+    <PopoverItem [icon]="icon3" (click)="popoverSelect('sblb')">设备列表</PopoverItem>
+  </ng-template>
+  <ng-template #icon1>
+    <!-- <Icon [src]="'https://gw.alipayobjects.com/zos/rmsportal/tOtXhkIWzwotgGSeptou.svg'" [size]="'xs'"></Icon> -->
+    <ion-icon name="tablet-portrait"></ion-icon>
+  </ng-template>
+  <ng-template #icon2>
+    <!-- <Icon [src]="'https://gw.alipayobjects.com/zos/rmsportal/tOtXhkIWzwotgGSeptou.svg'" [size]="'xs'"></Icon> -->
+    <ion-icon name="pricetags"></ion-icon>
+  </ng-template>
+  <ng-template #icon3>
+    <!-- <Icon [src]="'https://gw.alipayobjects.com/zos/rmsportal/tOtXhkIWzwotgGSeptou.svg'" [size]="'xs'"></Icon> -->
+    <ion-icon name="options"></ion-icon>
+  </ng-template>
+  <!-- <div *ngIf="state.open" style="position: absolute; right:0px;">
+        <List>
+            <ListItem [multipleLine]="true" >
+                设备监控
+            </ListItem>
+            <ListItem [multipleLine]="true" >
+                设备模板
+            </ListItem>
+        </List>
+    </div> -->
+  <ng-template #icon>
+    <Icon *ngIf="option == 'inCard'" [type]="'left'"></Icon><span *ngIf="option == 'inCard'"
+      (click)="shouye()">首页</span>
+    <!-- <ion-icon name="arrow-back" *ngIf="option == 'inCard'" ></ion-icon> -->
+    <!-- <i *ngIf="!(option == 'inCard') && !deviceDetail" (click)="add()" class="icon ion-android-add"
+            style="font-size: 25px;"></i> -->
+    <ion-icon name="add" *ngIf="!(option == 'inCard') && !deviceDetail && (showpage == 'sbjk')" (click)="add()"
+      style="font-size: 36px; margin: 10px;">
+    </ion-icon>
+    <ion-icon name="refresh" *ngIf="!(option == 'inCard') && !deviceDetail && (showpage == 'sbjk')"
+      style="font-size: 22px; margin-top: 17px;" (click)="refresh()">
+    </ion-icon>
+
+  </ng-template>
+</ion-header>
+
+<!-- 显示添加页面 -->
+<ion-content *ngIf="(option == 'new') && deviceDetail">
+  <app-device-detail [option]="option" [parentCom]="'设备卡片'" (result)="cancel($event)">
+  </app-device-detail>
+</ion-content>
+
+<!-- 显示设备卡片页面 -->
+<!-- <ion-content *ngIf="option == 'inCard'" >
+    <app-device-card [deviceIn]="selectDevice"></app-device-card>
+</ion-content> -->
+<!-- 显示设备编辑页面 -->
+<ion-content *ngIf="(option == 'edit') && deviceDetail">
+  <app-device-detail [device]="device" [option]="option" [parentCom]="'设备卡片'" (result)="cancel($event)">
+  </app-device-detail>
+</ion-content>
+
+<!-- 显示设备首页-单条数据 -->
+<ion-content *ngIf="userLogin && !(option == 'inCard') && !deviceDetail && (showpage == 'sbjk')">
+  <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content 
+    pullingIcon="arrow-dropdown"
+    pullingText="松开立即刷新"
+    refreshingSpinner="circles"
+    refreshingText="加载中..."></ion-refresher-content>
+  </ion-refresher>
+
+  <WingBlank>
+    <div *ngIf="viewList && viewList.length === 0">
+      <Result [img]="img5" [title]="'暂无数据'">
+        <ng-template #img5>
+          <img src="https://gw.alipayobjects.com/zos/rmsportal/GIyMDJnuqmcqPLpHCSkj.svg" class="spe am-icon am-icon-md"
+            alt="" />
+        </ng-template>
+      </Result>
+    </div>
+
+    <div *ngIf="viewList && (viewList.length > 0)" class="content-shouyediv">
+      <div class="content-shouyediv-div">
+        <ion-icon class="content-shouyediv-div-icon-left" (click)="switch()"
+          [ngStyle]="{'background-color': bgc_icon?'#108ee9':'transparent'}" name="remove"></ion-icon>
+        <ion-icon class="content-shouyediv-div-icon-right" (click)="switch()"
+          [ngStyle]="{'background-color': !bgc_icon?'#108ee9':'transparent'}" name="reorder"></ion-icon>
+      </div>
+      <div *ngFor="let item of viewList; let i = index" style="margin-bottom: 20px;">
+        <!-- 简略信息页面 -->
+        <!-- <Card *ngIf="single" (click)="inCard(item.key)" style="width: 100%;height: 100%;" -->
+        <!-- [ngStyle]="{'background-color':item['devicesetting']['cardcolor']}"> -->
+        <!-- <CardHeader [title]="item.name"
+            [thumb]="'https://www.baidu.com/img/baidu_jgylogo3.gif'" 
+            [thumbStyle]="thumbStyle"
+            class="cardstyle">
+          </CardHeader> -->
+        <!-- <CardBody class="cardstyle">
+            <div>{{item.name}}</div>
+          </CardBody> -->
+        <!-- </Card> -->
+        <div *ngIf="single" class="simpleCard" [ngStyle]="{'background-color':item['devicesetting']['cardcolor']}">
+          <div class="mark" [ngStyle]="{'background-color': liteColor[viewList.indexOf(item)]}"></div>
+          <img [src]="item.deviceimg?urlServer.FileHost+'/'+ item.deviceimg:'../assets/img/timg.png'" alt=""
+            class="deviceImg" (click)="showAlertMuchButtons(item)">
+          <div style="width: 60%;height:100%;margin-left:40%;" (click)="inCard(item.key)"><span
+              class="deviceName">{{item.name}}</span></div>
+        </div>
+
+
+        <!-- 详细信息页面 -->
+        <!-- <div id="status" *ngIf="!single">
+          <div style="background-color: #2ecc71;"></div>
+          <span style="margin-left: 5px;">运行</span>
+
+          <div style="background-color: #e74c3c;"></div>
+          <span style="margin-left: 5px;">停机</span>
+        </div> -->
+        <Card *ngIf="!single" (click)="inCard(item.key)" class="cardstyle2">
+          <CardHeader [title]="item.name" [ngStyle]="{'background-color':item['devicesetting']['cardcolor']}"
+            [extra]="extra">
+            <ng-template #extra>
+              <!-- <Icon [type]="'ellipsis'" (click)="$event.stopPropagation();toTable(item.key)" style="float: right"></Icon> -->
+              <span style="font-size:20px;font-weight:bold;color:#000000;">{{item.code}}</span>
+            </ng-template>
+          </CardHeader>
+          <CardBody class="card-content">
+            <div *ngFor="let att of display(item)"
+              [ngStyle]="{'height':200/row(item)+'px','padding-top':100/row(item)-64+'px','width':width(item,att)}">
+              <span>{{keyValue(item.key, att.code)}}</span><br>
+              <span style="font-size: 16px;">{{att.name}}</span>
+            </div>
+          </CardBody>
+          <div [id]="item.key" style="height: 50px"></div>
+        </Card>
+      </div>
+    </div>
+
+  </WingBlank>
+</ion-content>
+
+
+
+<!-- 显示设备模板页面 -->
+<ion-content *ngIf="showpage == 'sbmb'">
+  <WingBlank>
+    <app-device-template></app-device-template>
+  </WingBlank>
+</ion-content>
+
+<!-- 显示设备列表页面 -->
+<ion-content *ngIf="showpage == 'sblb'">
+  <WingBlank>
+    <app-device-list></app-device-list>
+  </WingBlank>
+</ion-content>

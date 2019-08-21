@@ -1,0 +1,158 @@
+<!--报警策略列表-->
+<div id="content">
+
+  <!--跳转策略详情页面，新增编辑相同-->
+  <app-add-alarm-strategy *ngIf="alarmStgDetail" [alarmStg]="alarmStg" [option]="option" [parentCom]="'报警策略列表'"
+    (result)="cancel($event)"></app-add-alarm-strategy>
+
+  <div *ngIf="!alarmStgDetail">
+    <div style="width: 94%; min-height: 50px; padding: 10px 0px; margin: 0 auto;">
+      <div style=" width: 68%; float: left;">
+        <!-- <SearchBar [placeholder]="'输入关键字搜索'" [setFocus]="autoFocus" [(ngModel)]="searchValue" (ngModelChange)="search()"
+          (onCancel)="cancel()">
+        </SearchBar> -->
+        <div class="item-input-inset" style="padding: 0">
+          <label class="item-input-wrapper">
+            <i class="icon ion-ios-search placeholder-icon"></i>
+            <ion-input type="search" placeholder="输入关键字搜索" [(ngModel)]="searchValue" (ionChange)="search()"
+              (ionFocus)=" this.inputFocus = true; " (ionBlur)=" this.inputFocus = false; "></ion-input>
+          </label>
+          <ion-button *ngIf="inputFocus" class="button cancel-btn" size="small" fill="clear" (click)="cancel()">
+            取消
+          </ion-button>
+        </div>
+      </div>
+      <div Button [size]="'small'" (click)="getList()" style="width: 15%; margin-left: 1%; float: left;">刷新
+      </div>
+      <div Button [size]="'small'" [type]="'primary'" (click)="add()" style="width: 15%; margin-left: 1%; float: left;">
+        新增</div>
+    </div>
+    <!-- <WhiteSpace [size]="'lg'"></WhiteSpace> -->
+    <ActivityIndicator [toast]="true" [text]="'加载中...'" [animating]="loading"></ActivityIndicator>
+
+    <!-- <table style="width: 100%; border-collapse:separate; border-spacing:0px 15px; table-layout: fixed;">
+      <thead>
+        <tr>
+          <th width="10px">#</th>
+          <th style="width: 60px;">策略名称</th>
+          <th style="width: 50px;">标识符</th>
+          <th style="width: 60px;">报警条件</th>
+          <th style="width: 60px;">报警级别</th>
+          <th style="width: 60px;">时间间隔</th>
+          <th style="width: 60px;">启用禁用</th>
+          <th style="width: 31px;">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of alarmStgList">
+          <td>{{alarmStgList.indexOf(data) + 1}}</td>
+          <td>
+            <a (click)="edit(data.key)">{{ data.name }}</a>
+          </td>
+          <td>{{ data.code }}</td>
+          <td>{{ data.attribute.name }}{{ data.conditiona.key }}{{ data.conditiona.value }};
+            <span
+              *ngIf="data.conditionb.value">{{ data.attribute.name }}{{ data.conditionb.key }}{{ data.conditionb.value }}</span>
+          </td>
+          <td>
+            <span style="color:gold" *ngIf="data.level==0">提醒</span>
+            <span style="color:rgb(253, 152, 0)" *ngIf="data.level==1">警报</span>
+            <span style="color:rgb(255, 0, 0)" *ngIf="data.level==2">严重</span>
+          </td>
+          <td>{{ data.interval }}</td>
+          <td>
+            <Switch [(ngModel)]="data.status"></Switch>
+          </td>
+          <td style="text-align: center;">
+            <a (click)="edit(data.key)">
+              <ion-icon name="create"></ion-icon>
+            </a>
+            <a (click)="remove(data.key)" style="color: #ff2222;">
+              <ion-icon name="trash"></ion-icon>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table> -->
+    <WingBlank>
+      <Card *ngFor="let data of alarmStgList" style="margin: 5px 0px 15px;">
+        <CardHeader [title]="title" class="title"
+          [ngStyle]="{'background-color': data.level==0?'gold':data.level==1?'rgb(253, 152, 0)':'rgb(255, 0, 0)' }"
+          [extra]="extra">
+        </CardHeader>
+        <ng-template #extra>
+          <a (click)="remove(data.key)" style="color: #fff;">
+            <ion-icon name="trash"></ion-icon>
+            <!-- 删除 -->
+          </a>
+        </ng-template>
+        <ng-template #title><span (click)="edit(data.key)" >{{data.name}}</span></ng-template>
+        <CardBody style="padding: 0px 0px 5px"
+          [ngStyle]="{'border': data.level==0?'1px solid gold':data.level==1?'1px solid  rgb(253, 152, 0)':'1px solid rgb(255, 0, 0)'}">
+          <div id="contentCard">
+            <!--           
+          <ul style="padding: 10px;">
+            <li>标识符</li>
+            <li>{{ data.code }}</li>
+            <li>报警条件</li>
+            <li>{{ data.attribute.name }}{{ data.conditiona.key }}{{ data.conditiona.value }};
+              <p
+                *ngIf="data.conditionb.value">{{ data.attribute.name }}{{ data.conditionb.key }}{{ data.conditionb.value }}</p>
+            </li>
+            <li>报警级别</li>
+            <li> <span style="color:gold" *ngIf="data.level==0">提醒</span>
+              <span style="color:rgb(253, 152, 0)" *ngIf="data.level==1">警报</span>
+              <span style="color:rgb(255, 0, 0)" *ngIf="data.level==2">严重</span></li>
+            <li>时间间隔</li>
+            <li>{{ data.interval }}</li>
+            <li>启用禁用</li>
+            <li>
+              <Switch [(ngModel)]="data.status"></Switch>
+            </li>
+          </ul> -->
+
+            <table
+              style="width: 100%; border-collapse:separate; border-spacing:0px 15px; table-layout: fixed; border: 0px; padding: 0px 10px">
+              <tbody>
+                <tr>
+                  <td>策略名称</td>
+                  <td>{{ data.name }}</td>
+                </tr>
+                <tr>
+                  <td>标识符</td>
+                  <td>{{ data.code }}</td>
+                </tr>
+                <tr>
+                  <td>报警条件</td>
+                  <td>{{ data.attribute.name }}{{ data.conditiona.key }}{{ data.conditiona.value }};
+                    <p *ngIf="data.conditionb.value">
+                      {{ data.attribute.name }}{{ data.conditionb.key }}{{ data.conditionb.value }}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>报警级别</td>
+                  <td><span style="color:gold" *ngIf="data.level==0">提醒</span>
+                    <span style="color:rgb(253, 152, 0)" *ngIf="data.level==1">警报</span>
+                    <span style="color:rgb(255, 0, 0)" *ngIf="data.level==2">严重</span></td>
+                </tr>
+                <tr>
+                  <td>时间间隔</td>
+                  <td>{{ data.interval }}</td>
+                </tr>
+                <tr>
+                  <td>启用禁用</td>
+                  <td>
+                    <Switch [(ngModel)]="data.status"></Switch>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </CardBody>
+      </Card>
+    </WingBlank>
+  </div>
+
+
+
+</div>

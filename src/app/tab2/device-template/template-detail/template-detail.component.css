@@ -1,0 +1,23 @@
+#content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 12px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  min-height: calc(100% - 24px);
+}
+[nz-form] {
+  padding-top: 8px;
+  max-width: 600px;
+}
+#btn {
+  margin: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+#btn:hover {
+  color: #0987fe;
+}
+/*# sourceMappingURL=template-detail.component.css.map */
